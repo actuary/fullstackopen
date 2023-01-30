@@ -1,8 +1,34 @@
 const express = require('express')
 const moment = require('moment')
+const morgan = require('morgan')
 const app = express()
 
 app.use(express.json())
+app.use(morgan(function (tokens, req, res) {
+    if (tokens.method(req, res) === 'POST') {
+        return [
+            tokens.method(req, res),
+            tokens.url(req, res),
+            tokens.status(req, res),
+            tokens.res(req, res, 'content-length'), '-',
+            tokens['response-time'](req, res), 'ms',
+            JSON.stringify(req.body)
+        ].join(' ')
+    }
+    return [
+        tokens.method(req, res),
+        tokens.url(req, res),
+        tokens.status(req, res),
+        tokens.res(req, res, 'content-length'), '-',
+        tokens['response-time'](req, res), 'ms'
+    ].join(' ')
+}))
+
+const unknownEndpoint = (request, response) => {
+    response.status(404).send({ error: 'unknown endpoint' })
+}
+
+
 
 let persons = [
     {
@@ -42,13 +68,52 @@ app.get('/api/info', (request, response) => {
 
 app.get('/api/persons/:id', (request, response) => {
     const id = Number(request.params.id)
-    const note = persons.find(person => person.id === id)
+    const person = persons.find(person => person.id === id)
     if (person) {
         response.json(person)
     } else {
         response.status(404).end()
     }
 })
+
+app.delete('/api/persons/:id', (request, response) => {
+    const id = Number(request.params.id)
+    const person = persons.find(person => person.id === id)
+    if (person) {
+        persons = persons.filter(person => person.id !== id)
+        response.json(person)
+    } else {
+        response.json({})
+    }
+})
+
+const nextId = () => (
+    Math.round(Math.random()*100000000, 0)
+)
+
+app.post('/api/persons', (request, response) => {
+    const body = request.body
+    const found_person = persons.find(person => person.name == body.name)
+
+    if (found_person) {
+        response.status(400).json({error: 'name must be unique'})
+    } else if (!body.name) {
+        response.status(400).json({error: 'name is missing'})
+    } else if (!body.number) {
+        response.status(400).json({error: 'number is missing'})
+    } else {
+        const person = {
+            name: body.name,
+            number: body.number,
+            id: nextId()
+        }
+        persons = persons.concat(person)
+        response.json(person)
+    }
+
+})
+
+app.use(unknownEndpoint)
 
 const PORT = 3001
 app.listen(PORT, () => {
