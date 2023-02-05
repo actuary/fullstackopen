@@ -5,23 +5,21 @@ const app = express()
 app.use(cors())
 app.use(express.json())
 
-let notes = [
-    {
-        id: 1,
-        content: "HTML is easy",
-        important: true
-    },
-    {
-        id: 2,
-        content: "Browser can execute only JavaScript",
-        important: false
-    },
-    {
-        id: 3,
-        content: "GET and POST are the most important methods of HTTP protocol",
-        important: true
-    }
-]
+const mongoose = require('mongoose')
+
+// DO NOT SAVE YOUR PASSWORD TO GITHUB!!
+const url =
+  `mongodb+srv://fullstack:${password}@cluster0.o1opl.mongodb.net/?retryWrites=true&w=majority`
+
+mongoose.set('strictQuery',false)
+mongoose.connect(url)
+
+const noteSchema = new mongoose.Schema({
+  content: String,
+  important: Boolean,
+})
+
+const Note = mongoose.model('Note', noteSchema)
 
 app.get('/', (request, response) => {
     response.send('<h1>Hello World!</h1>')
