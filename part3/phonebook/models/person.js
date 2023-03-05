@@ -1,11 +1,10 @@
 
 const mongoose = require('mongoose')
 
-const uri = process.env.MONGODB_URI
-
 mongoose.set('strictQuery',false)
+
 mongoose.connect(process.env.MONGODB_URI)
-  .then(result => {
+  .then(() => {
     console.log('connected to MongoDB')
   })
   .catch((error) => {
@@ -21,7 +20,7 @@ const personSchema = new mongoose.Schema({
     validate: {
       validator: async value => {
         const person = await Person.findOne({ name: value })
-        return !(!!person)
+        return !person
       }
     }
   },
@@ -31,17 +30,17 @@ const personSchema = new mongoose.Schema({
     required: true,
     validate: {
       validator: value => re.test(value),
-      message: "Number must be at least 8 characters long with 1-2 hypen separators"
+      message: 'Number must be at least 8 characters long with 1-2 hypen separators'
     }
   },
 })
 
 personSchema.set('toJSON', {
-    transform: (document, returnedObject) => {
-        returnedObject.id = returnedObject._id.toString()
-        delete returnedObject._id
-        delete returnedObject.__v
-    }
+  transform: (document, returnedObject) => {
+    returnedObject.id = returnedObject._id.toString()
+    delete returnedObject._id
+    delete returnedObject.__v
+  }
 })
 
 const Person = mongoose.model('Person', personSchema)
