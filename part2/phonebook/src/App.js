@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import personService from './services/phonebooks'
 
-const Notification = ({ message, color }) => {
+const Notification = ({ message }) => {
   console.log(message)
   console.log(message.message)
   if (message === null) {
@@ -16,8 +16,8 @@ const Notification = ({ message, color }) => {
 }
 
 const filterPersons = (persons, name) => (
-  [...persons.filter(person => 
-        person.name.toLowerCase().startsWith(name.toLowerCase()))]
+  [...persons.filter(person =>
+    person.name.toLowerCase().startsWith(name.toLowerCase()))]
 )
 
 const Search = ({ persons, setFiltered }) => {
@@ -42,18 +42,18 @@ const Add = ({ persons, setPersons, filtered, setFiltered }) => {
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [errorMessage, setErrorMessage] = useState(null)
-  
+
   const handleSubmit = (event) => {
-    event.preventDefault() 
+    event.preventDefault()
 
     const toAdd = { name: newName, number: newNumber }
-    if (persons.every(person=>toAdd.name !== person.name)) {
+    if (persons.every( person => toAdd.name !== person.name)) {
       console.log(`Adding ${newName}`)
       personService.create(toAdd)
         .then(newPerson => {
           console.log(`Adding ${newName}`)
           setErrorMessage(
-            { 
+            {
               message: `Added '${newPerson.name}' to server.`,
               color: 'success'
             }
@@ -64,9 +64,9 @@ const Add = ({ persons, setPersons, filtered, setFiltered }) => {
           setPersons([...persons, newPerson])
           setFiltered([...filtered, newPerson])
         }).catch(error => {
-          console.log("error")
+          console.log('error')
           setErrorMessage(
-            { 
+            {
               message: error.response.data.error,
               color: 'error'
             }
@@ -83,9 +83,9 @@ const Add = ({ persons, setPersons, filtered, setFiltered }) => {
           const updatedPersons = [...persons.filter(person => person.name !== toAdd.name), newPerson]
           setPersons(updatedPersons)
         })
-        .catch(_ => {
+        .catch(() => {
           setErrorMessage(
-            { 
+            {
               message: `Information of '${person.name}' has already been removed from server`,
               color: 'error'
             }
@@ -123,7 +123,7 @@ const Numbers = ({ persons, setFiltered }) => {
     console.log(id)
     personService
       .remove(id)
-      .then(_ => {
+      .then(() => {
         setFiltered(persons.filter(person => person.id !== id))
       })
 
@@ -134,7 +134,7 @@ const Numbers = ({ persons, setFiltered }) => {
       <h2>Numbers</h2>
       <table>
         <tbody>
-          {persons.map(({ name, number, id })=>
+          {persons.map(({ name, number, id }) =>
             <tr key={id}>
               <td>{name}</td>
               <td>{number}</td>

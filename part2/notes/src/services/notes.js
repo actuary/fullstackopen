@@ -17,9 +17,9 @@ const update = (id, newObject) => {
 }
 
 const toExport = {
-  getAll, 
-  create, 
-  update 
+  getAll,
+  create,
+  update
 }
 
 export default toExport

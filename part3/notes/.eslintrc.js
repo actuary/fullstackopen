@@ -12,14 +12,12 @@ module.exports = {
   'overrides': [
   ],
   'parserOptions': {
-    'ecmaVersion': 'latest',
-    'sourceType': 'module'
+    'ecmaVersion': 'latest'
   },
   'plugins': [
     'react'
   ],
   'rules': {
-    'react/prop-types': 'off',
     'indent': [
       'error',
       2
@@ -44,9 +42,6 @@ module.exports = {
     'arrow-spacing': [
       'error', { 'before': true, 'after': true }
     ],
-    'no-console': 0,
-    'react/react-in-jsx-scope': 'off',
-    // allow jsx syntax in js files (for next.js project)
-    'react/jsx-filename-extension': [1, { 'extensions': ['.js', '.jsx'] }],
+    'no-console': 0
   }
 }
