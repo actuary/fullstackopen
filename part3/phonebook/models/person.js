@@ -12,32 +12,29 @@ mongoose.connect(process.env.MONGODB_URI)
     console.log('error connecting to MongoDB:', error.message)
   })
 
+const re = /^(\d+-){1,2}\d+$/
 const personSchema = new mongoose.Schema({
-name: String,
-number: String,
+  name: {
+    type: String,
+    minLength: 3,
+    required: true,
+    validate: {
+      validator: async value => {
+        const person = await Person.findOne({ name: value })
+        return !(!!person)
+      }
+    }
+  },
+  number: {
+    type: String,
+    minLength: 8,
+    required: true,
+    validate: {
+      validator: value => re.test(value),
+      message: "Number must be at least 8 characters long with 1-2 hypen separators"
+    }
+  },
 })
-
-
-const createPerson = (name, number) => {
-    const person = new Person({
-        name: name,
-        number: number,
-    })
-
-    person.save().then(result => {
-      console.log(`person ${name}@${number} saved!`)
-      mongoose.connection.close()
-    })
-}
-
-const showPeople = () => {
-    Person.find({}).then(result => {
-        result.forEach(person => {
-        console.log(person)
-        })
-        mongoose.connection.close()
-    })
-}
 
 personSchema.set('toJSON', {
     transform: (document, returnedObject) => {
@@ -47,4 +44,6 @@ personSchema.set('toJSON', {
     }
 })
 
-module.exports = mongoose.model('Person', personSchema)
+const Person = mongoose.model('Person', personSchema)
+
+module.exports = Person

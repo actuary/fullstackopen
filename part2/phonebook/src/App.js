@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import phonebooks from './services/phonebooks'
+import personService from './services/phonebooks'
 
 const Notification = ({ message, color }) => {
   console.log(message)
@@ -48,8 +48,10 @@ const Add = ({ persons, setPersons, filtered, setFiltered }) => {
 
     const toAdd = { name: newName, number: newNumber }
     if (persons.every(person=>toAdd.name !== person.name)) {
-      phonebooks.create(toAdd)
+      console.log(`Adding ${newName}`)
+      personService.create(toAdd)
         .then(newPerson => {
+          console.log(`Adding ${newName}`)
           setErrorMessage(
             { 
               message: `Added '${newPerson.name}' to server.`,
@@ -61,10 +63,22 @@ const Add = ({ persons, setPersons, filtered, setFiltered }) => {
           }, 5000)
           setPersons([...persons, newPerson])
           setFiltered([...filtered, newPerson])
+        }).catch(error => {
+          console.log("error")
+          setErrorMessage(
+            { 
+              message: error.response.data.error,
+              color: 'error'
+            }
+          )
+          setTimeout(() => {
+            setErrorMessage(null)
+          }, 5000)
+          console.log(error)
         })
     } else if (window.confirm(`Are you sure you want to change ${newName}'s number`)) {
       const person = persons.find(p => p.name === newName)
-      phonebooks.update(person.id, toAdd)
+      personService.update(person.id, toAdd)
         .then(newPerson => {
           const updatedPersons = [...persons.filter(person => person.name !== toAdd.name), newPerson]
           setPersons(updatedPersons)
@@ -107,7 +121,7 @@ const Add = ({ persons, setPersons, filtered, setFiltered }) => {
 const Numbers = ({ persons, setFiltered }) => {
   const handleRemoveClick = (id) => {
     console.log(id)
-    phonebooks
+    personService
       .remove(id)
       .then(_ => {
         setFiltered(persons.filter(person => person.id !== id))
@@ -137,7 +151,7 @@ const App = () => {
   const [persons, setPersons] = useState([])
 
   useEffect(() => {
-    phonebooks
+    personService
       .getAll()
       .then(persons => {
         setPersons(persons)
