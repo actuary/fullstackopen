@@ -4,6 +4,12 @@ module.exports = {
     'commonjs': true,
     'es2021': true,
     'node': true,
+    'jest': true
+  },
+  'settings': {
+    'react': {
+      'version': '999.999.999'
+    }
   },
   'extends': [
     'eslint:recommended',
@@ -24,7 +30,7 @@ module.exports = {
     ],
     'linebreak-style': [
       'error',
-      'unix'
+      'windows'
     ],
     'quotes': [
       'error',
