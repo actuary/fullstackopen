@@ -1,17 +1,17 @@
-import { MONGODB_URI } from './utils/config'
-import express from 'express'
+const config = require('./utils/config')
+const express = require('express')
 const app = express()
 
-import cors from 'cors'
-import notesRouter from './controllers/notes'
-import middleware from './utils/middleware'
-import { set, connect } from 'mongoose'
+const cors = require('cors')
+const notesRouter = require('./controllers/notes')
+const middleware = require('./utils/middleware')
+const { set, connect } = require('mongoose')
 
 set('strictQuery', false)
 
-console.log('connecting to', MONGODB_URI)
+console.log('connecting to', config.MONGODB_URI)
 
-connect(MONGODB_URI)
+connect(config.MONGODB_URI)
   .then(() => {
     console.log('connected to MongoDB')
   })
@@ -32,3 +32,5 @@ app.use('/api/notes', notesRouter)
 
 app.use(middleware.unknownEndpoint)
 app.use(middleware.errorHandler)
+
+module.exports = app
