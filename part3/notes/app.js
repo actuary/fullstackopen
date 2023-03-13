@@ -1,5 +1,7 @@
 const config = require('./utils/config')
+const logger = require('./utils/logger')
 const express = require('express')
+require('express-async-errors')
 const app = express()
 
 const cors = require('cors')
@@ -9,14 +11,14 @@ const { set, connect } = require('mongoose')
 
 set('strictQuery', false)
 
-console.log('connecting to', config.MONGODB_URI)
+logger.info('connecting to', config.MONGODB_URI)
 
 connect(config.MONGODB_URI)
   .then(() => {
-    console.log('connected to MongoDB')
+    logger.info('connected to MongoDB')
   })
   .catch((error) => {
-    console.log('error connecting to MongoDB:', error.message)
+    logger.info('error connecting to MongoDB:', error.message)
   })
 
 app.use(cors())
