@@ -1,5 +1,6 @@
 POST http://localhost:3003/api/blogs
 Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImR2ZG9nIiwiaWQiOiI2NDI4ODhhYzc2YTY4ZmI3Yjc5N2E3MWYiLCJpYXQiOjE2ODAzODEzNzV9.2sjwCQl4DUbsyeNlr4gibiecPbkxypGfxuEaG5abz_4
 
 {
     "title": "Top 3 blogs",
