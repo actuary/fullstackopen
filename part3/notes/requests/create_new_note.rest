@@ -1,7 +1,9 @@
 POST http://localhost:3001/api/notes
 content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImR2ZG9nIiwiaWQiOiI2NDI4Nzk3MjkwODY3NGYzM2M5YzhhNTIiLCJpYXQiOjE2ODAzNzY2NDh9.AQJjpMUEmri4lJMIHpefYgfP3S7BWBxCO33bvhxXIfc
 
 {
     "content": "Postman is bad in testing backend.",
-    "important": true
+    "important": false,
+    "userId": "64287972908674f33c9c8a52"
 }

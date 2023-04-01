@@ -1,13 +1,15 @@
 const config = require('./utils/config')
-const logger = require('./utils/logger')
 const express = require('express')
-require('express-async-errors')
 const app = express()
-
 const cors = require('cors')
-const notesRouter = require('./controllers/notes')
-const middleware = require('./utils/middleware')
+const logger = require('./utils/logger')
 const { set, connect } = require('mongoose')
+require('express-async-errors')
+
+const notesRouter = require('./controllers/notes')
+const usersRouter = require('./controllers/users')
+const loginRouter = require('./controllers/login')
+const middleware = require('./utils/middleware')
 
 set('strictQuery', false)
 
@@ -31,6 +33,8 @@ app.get('/', (request, response) => {
 })
 
 app.use('/api/notes', notesRouter)
+app.use('/api/users', usersRouter)
+app.use('/api/login', loginRouter)
 
 app.use(middleware.unknownEndpoint)
 app.use(middleware.errorHandler)
