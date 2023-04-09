@@ -16,7 +16,7 @@ const App = () => {
 
   useEffect(() => {
     blogService.getAll().then(blogs =>
-      setBlogs(blogs)
+      setBlogs(sortedBlogs(blogs))
     )
   }, [])
 
@@ -28,6 +28,17 @@ const App = () => {
       blogService.setToken(user.token)
     }
   }, [])
+
+  const sortedBlogs = (blogs) => blogs.sort((blogA, blogB) => blogB.likes - blogA.likes)
+
+  const updateBlog = (blog) => {
+    const newBlogList = blogs.filter(b => b.id !== blog.id).concat(blog)
+    setBlogs(sortedBlogs(newBlogList))
+  }
+
+  const removeBlog = (blog) => {
+    setBlogs(blogs.filter(b => b.id !== blog.id))
+  }
 
   const handleLogin = async (event) => {
     event.preventDefault()
@@ -74,6 +85,7 @@ const App = () => {
 
     try {
       const newBlog = await blogService.createBlog({ title, author, url })
+      setBlogs(sortedBlogs(blogs.concat(newBlog)))
       setMessage({
         message: `added ${title} by ${author}`,
         success: false
@@ -124,7 +136,7 @@ const App = () => {
   const blogDisplay = () => (
     <>
       {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} />
+        <Blog key={blog.id} blog={blog} user={user} updateBlog={updateBlog} deleteBlog={removeBlog}/>
       )}
     </>
   )
