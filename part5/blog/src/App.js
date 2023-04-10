@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import Blog from './components/Blog'
+import BlogForm from './components/BlogForm'
 import Notification from './components/Notification'
 import Togglable from './components/Togglable'
 import blogService from './services/blogs'
@@ -31,7 +32,8 @@ const App = () => {
 
   const sortedBlogs = (blogs) => blogs.sort((blogA, blogB) => blogB.likes - blogA.likes)
 
-  const updateBlog = (blog) => {
+  const updateBlog = async (blog) => {
+    await blogService.likeBlog({...blog, user:blog.user.id, likes: blog.likes + 1})
     const newBlogList = blogs.filter(b => b.id !== blog.id).concat(blog)
     setBlogs(sortedBlogs(newBlogList))
   }
@@ -140,57 +142,6 @@ const App = () => {
       )}
     </>
   )
-
-  const BlogForm = ({ createNewBlog }) => {
-    const [title, setTitle] = useState('')
-    const [author, setAuthor] = useState('')
-    const [url, setUrl] = useState('')
-
-    const addNewBlog = async (event) => {
-      event.preventDefault()
-      blogFormRef.current.toggleVisibility()
-
-      await createNewBlog(title, author, url)
-      setTitle('')
-      setAuthor('')
-      setUrl('')
-    }
-    return (
-      <>
-        <h2>create new</h2>
-        <form onSubmit={addNewBlog}>
-          <div>
-            title
-            <input
-              type="text"
-              value={title}
-              name="Title"
-              onChange={({ target }) => setTitle(target.value)}
-            />
-          </div>
-          <div>
-            author
-            <input
-              type="text"
-              value={author}
-              name="Author"
-              onChange={({ target }) => setAuthor(target.value)}
-            />
-          </div>
-          <div>
-            url
-            <input
-              type="text"
-              value={url}
-              name="Url"
-              onChange={({ target }) => setUrl(target.value)}
-            />
-          </div>
-          <button type="submit">create</button>
-        </form>
-      </>
-    )
-  }
 
   const createBlogForm = () => (
     <Togglable buttonLabel='create blog' ref={blogFormRef}>

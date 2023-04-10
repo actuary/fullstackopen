@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-const NoteForm = ({ createNote }) => {
+const NoteForm = ({ createNote, noteFormRef }) => {
   const [newNote, setNewNote] = useState('')
 
   const handleChange = (event) => {
@@ -9,6 +9,7 @@ const NoteForm = ({ createNote }) => {
 
   const addNote = (event) => {
     event.preventDefault()
+    noteFormRef.current.toggleVisibility()
     createNote({
       content: newNote,
       important: Math.random() > 0.5,
