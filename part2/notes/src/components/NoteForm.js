@@ -12,7 +12,7 @@ const NoteForm = ({ createNote, noteFormRef }) => {
     noteFormRef.current.toggleVisibility()
     createNote({
       content: newNote,
-      important: Math.random() > 0.5,
+      important: true,
     })
 
     setNewNote('')
@@ -24,10 +24,11 @@ const NoteForm = ({ createNote, noteFormRef }) => {
 
       <form onSubmit={addNote}>
         <input
+          id="note-content"
           value={newNote}
           onChange={handleChange}
         />
-        <button type="submit">save</button>
+        <button id="create-note-button" type="submit">save</button>
       </form>
     </div>
   )

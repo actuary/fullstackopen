@@ -50,6 +50,7 @@ describe('<Note />', () => {
   test('shows url and likes after clicking button', async () => {
     const evt = userEvent.setup()
     const button = container.querySelector('#show-details')
+    screen.findBy
     await evt.click(button)
 
     const div = container.querySelector('.blog')
