@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import Note from './components/Note'
 import Notification from './components/Notification'
 import Footer from './components/Footer'
+import NoteForm from './components/NoteForm'
 import LoginForm from './components/LoginForm'
 import Togglable from './components/Togglable'
 import noteService from './services/notes'
@@ -107,34 +108,6 @@ const App = () => {
       />
     </Togglable>
   )
-  const NoteForm = ({ createNote }) => {
-    const [newNote, setNewNote] = useState('')
-    const addNote = (event) => {
-      event.preventDefault()
-      noteFormRef.current.toggleVisibility()
-      createNote({
-        content: newNote,
-        important: Math.random() > 0.5,
-      })
-      setNewNote('')
-    }
-
-
-    return (
-      <div>
-        <h2>Create a new note</h2>
-
-        <form onSubmit={addNote}>
-          <input
-            value={newNote}
-            onChange={event => setNewNote(event.target.value)}
-          />
-          <button type="submit">save</button>
-        </form>
-      </div>
-    )
-  }
-
 
   const noteForm = () => (
     <Togglable buttonLabel="new note" ref={noteFormRef}>
