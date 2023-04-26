@@ -70,7 +70,6 @@ const Footer = () => (
 )
 
 
-
 const CreateNew = (props) => {
   const [content, resetContent] = useField('content')
   const [author, resetAuthor] = useField('author')
