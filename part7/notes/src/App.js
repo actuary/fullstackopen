@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Nav, Navbar, Table, Form, Button, Alert } from 'react-bootstrap'
+import { IconButton, AppBar, Toolbar, Container, Table, TableBody, TableCell, TableRow, Button, TextField, Alert } from '@mui/material'
 
 import {
   Routes,
@@ -33,20 +33,20 @@ const Notes = ({ notes }) => (
   <div>
     <h2>Notes</h2>
     <Table striped>
-      <tbody>
+      <TableBody>
         {notes.map(note =>
-          <tr key={note.id}>
-            <td>
+          <TableRow key={note.id}>
+            <TableCell>
               <Link to={`/notes/${note.id}`}>
                 {note.content}
               </Link>
-            </td>
-            <td>
+            </TableCell>
+            <TableCell>
               {note.user}
-            </td>
-          </tr>
+            </TableCell>
+          </TableRow>
         )}
-      </tbody>
+      </TableBody>
     </Table>
   </div>
 )
@@ -74,22 +74,13 @@ const Login = (props) => {
   return (
     <div>
       <h2>login</h2>
-      <Form onSubmit={onSubmit}>
-        <Form.Group>
-          <Form.Label>username:</Form.Label>
-          <Form.Control
-            type="text"
-            name="username"
-          />
-          <Form.Label>password:</Form.Label>
-          <Form.Control
-            type="password"
-          />
+      <form onSubmit={onSubmit}>
+          <div><TextField label="username" /></div>
+          <div><TextField label="password" /></div>
           <Button variant="primary" type="submit">
             login
           </Button>
-        </Form.Group>
-      </Form>
+      </form>
     </div>
   )
 }
@@ -134,39 +125,33 @@ const App = () => {
     }, 10000)
   }
 
-  const padding = {
-    padding: 5
-  }
-
   return (
-    <div class="container">
+    <Container>
       {(message &&
         <Alert variant="success">
           {message}
         </Alert>
       )}
-      <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
-        <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-        <Navbar.Collapse id="responsive-navbar-nav">
-          <Nav className="me-auto">
-            <Nav.Link href="#" as="span">
-              <Link style={padding} to="/">home</Link>
-            </Nav.Link>
-            <Nav.Link href="#" as="span">
-              <Link style={padding} to="/notes">notes</Link>
-            </Nav.Link>
-            <Nav.Link href="#" as="span">
-              <Link style={padding} to="/users">users</Link>
-            </Nav.Link>
-            <Nav.Link href="#" as="span">
-              {user
-                ? <em style={padding}>{user} logged in</em>
-                : <Link style={padding} to="/login">login</Link>
-              }
-            </Nav.Link>
-          </Nav>
-        </Navbar.Collapse>
-      </Navbar>
+      <AppBar position="static">
+        <Toolbar>
+          <IconButton edge="start" color="inherit" aria-label="menu">
+          </IconButton>
+          <Button color="inherit" component={Link} to="/">
+            home
+          </Button>
+          <Button color="inherit" component={Link} to="/notes">
+            notes
+          </Button>
+          <Button color="inherit" component={Link} to="/users">
+            users
+          </Button>
+          {user
+            ? <em>{user} logged in</em>
+            : <Button color="inherit" component={Link} to="/login">login</Button>
+
+          }
+        </Toolbar>
+      </AppBar>
       <Routes>
         <Route path="/notes/:id" element={<Note note={note} />} />
         <Route path="/notes" element={<Notes notes={notes} />} />
@@ -178,7 +163,7 @@ const App = () => {
         <br />
         <em>Note app, Department of Computer Science 2022</em>
       </div>
-    </div>
+    </Container>
   )
 }
 
