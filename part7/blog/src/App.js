@@ -1,18 +1,16 @@
-import { useRef } from 'react'
 import { useSelector } from 'react-redux'
+
+import Notification from './components/Notification'
+
+import LoginForm from './components/LoginForm'
+import UserDetails from './components/UserDetails'
 
 import Blogs from './components/Blogs'
 import BlogForm from './components/BlogForm'
-import UserDetails from './components/UserDetails'
 
-import Notification from './components/Notification'
-import Togglable from './components/Togglable'
-
-import LoginForm from './components/LoginForm'
 
 const GlobalView = () => {
   const user = useSelector(state => state.user)
-  const blogFormRef = useRef()
 
   return (
     <>
@@ -21,9 +19,7 @@ const GlobalView = () => {
         <>
           <UserDetails />
           <br />
-          <Togglable buttonLabel='create blog' ref={blogFormRef}>
-            <BlogForm blogFormRef={blogFormRef} />
-          </Togglable>
+          <BlogForm />
           <br />
           <Blogs />
         </> :
