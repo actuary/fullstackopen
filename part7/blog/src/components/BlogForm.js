@@ -21,6 +21,7 @@ const BlogForm = () => {
     setAuthor('')
     setUrl('')
   }
+
   return (
     <Togglable buttonLabel='create blog' ref={blogFormRef}>
       <h2>create new</h2>
