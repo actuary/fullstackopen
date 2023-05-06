@@ -16,7 +16,11 @@ const Blogs = () => {
   return (
     <ul>
       {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} updateBlog={likeBlog} deleteBlog={deleteBlog} />
+        <Blog 
+          key={blog.id} 
+          blog={blog} 
+          updateBlog={(b) => dispatch(likeBlog(b))} 
+          deleteBlog={(b) => dispatch(deleteBlog(b))} />
       )}
     </ul>
   )

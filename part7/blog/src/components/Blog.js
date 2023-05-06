@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import { useSelector } from 'react-redux'
+import { Link } from "react-router-dom"
+
 import blogService from '../services/blogs'
 
 const Blog = ({ blog, deleteBlog, updateBlog }) => {
@@ -46,7 +48,9 @@ const Blog = ({ blog, deleteBlog, updateBlog }) => {
   return (
     <div style={blogStyle} className="blog">
       <div>
+      <Link to={`/blogs/${blog.id}`}>
         {blog.title} by {blog.author}
+      </Link>
         <button id="show-details" onClick={() => setShowDetails(!showDetails)}>{showDetails ? "hide" : "show"}</button>
       </div>
       {showDetails ? fullDetails() : <></>}

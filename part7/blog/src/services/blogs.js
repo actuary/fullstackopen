@@ -26,6 +26,11 @@ const likeBlog = async likedBlog => {
   return response.data
 }
 
+const commentBlog = async (commentedBlog, comment) => {
+  const response = await axios.post(`${baseUrl}/${commentedBlog.id}/comments`, { comment })
+  return response.data
+}
+
 const deleteBlog = async blogToDelete => {
   const config = {
     headers: { Authorization: token },
@@ -35,4 +40,4 @@ const deleteBlog = async blogToDelete => {
 }
 
 // eslint-disable-next-line import/no-anonymous-default-export
-export default { getAll, createBlog, setToken, likeBlog, deleteBlog }
+export default { getAll, createBlog, setToken, likeBlog, deleteBlog, commentBlog }
