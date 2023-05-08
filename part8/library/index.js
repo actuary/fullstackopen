@@ -92,7 +92,8 @@ const resolvers = {
 
       return Book.find({}).populate('author', 'name born').exec()
     },
-    allAuthors: async () => Author.find({})
+    allAuthors: async () => Author.find({}),
+    me: async (root, args, context) => context.currentUser
   },
 
   Mutation: {
