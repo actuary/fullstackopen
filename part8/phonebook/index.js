@@ -107,6 +107,15 @@ const resolvers = {
   },
   Mutation: {
     addPerson: async (root, args, context) => {
+      const foundPerson = await Person.findOne({ name: args.name })
+      if (foundPerson) {
+        throw new GraphQLError('already exists', {
+          extensions: {
+            code: 'BAD_USER_INPUT',
+          }
+        })
+      }
+
       const person = new Person({ ...args })
       const currentUser = context.currentUser
 
