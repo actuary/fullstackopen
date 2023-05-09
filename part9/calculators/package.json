@@ -1,0 +1,12 @@
+{
+  "name": "calculators",
+  "version": "1.0.0",
+  "description": "Bunch of calculators",
+  "main": "index.js",
+  "scripts": {
+    "calculateBMI": "ts-node bmiCalculator.ts",
+    "calculateExercise": "ts-node exerciseCalculator.ts"
+  },
+  "author": "me",
+  "license": "ISC"
+}
