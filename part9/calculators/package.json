@@ -8,5 +8,8 @@
     "calculateExercise": "ts-node exerciseCalculator.ts"
   },
   "author": "me",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^20.1.2"
+  }
 }
