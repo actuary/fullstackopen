@@ -6,7 +6,9 @@
   "scripts": {
     "ts-node": "ts-node",
     "multiply": "ts-node multiplier.ts",
-    "calculate": "ts-node calculator.ts"
+    "calculate": "ts-node calculator.ts",
+    "start": "ts-node index.ts",
+    "dev": "ts-node-dev index.ts"
   },
   "author": "",
   "license": "ISC",
@@ -15,6 +17,10 @@
     "@types/jest": "^29.5.1",
     "@types/lodash": "^4.14.194",
     "@types/mongoose": "^5.11.97",
-    "@types/react": "^18.2.6"
+    "@types/react": "^18.2.6",
+    "ts-node-dev": "^2.0.0"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
   }
 }

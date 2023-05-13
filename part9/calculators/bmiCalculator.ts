@@ -3,8 +3,6 @@ interface HealthInformation {
   weight: number
 }
 
-export {}
-
 const calculateBMI = (height: number, weight: number): string => {
   const bmi = weight / ((height / 100.0) ** 2);
 
@@ -43,4 +41,8 @@ try {
     errorMessage += ' Error: ' + error.message;
   }
   console.log(errorMessage)
+}
+
+export {
+  calculateBMI
 }
