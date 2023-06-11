@@ -62,22 +62,26 @@ const App = () => {
         null
       }
       <form onSubmit={noteCreation}>
-        date <input
-          value={date}
-          onChange={(event) => setDate(event.target.value)}
-        /><br/>
-        visibility <input
-          value={visibility}
-          onChange={(event) => setVisibility(event.target.value)}
-        /><br/>
-        weather <input
-          value={weather}
-          onChange={(event) => setWeather(event.target.value)}
-        /><br/>
+        date <input type='date' name='diary-date' min='2018-01-01' max='2023-06-11'
+          onChange={(event) => setDate(event.target.value)} value={date}
+        /><br />
+        visibility <>
+          great <input type='radio' name='visibility' onChange={() => setVisibility('great')} />
+          good <input type='radio' name='visibility' onChange={() => setVisibility('good')} />
+          ok <input type='radio' name='visibility' onChange={() => setVisibility('ok')} />
+          poor <input type='radio' name='visibility' onChange={() => setVisibility('poor')} />
+        </><br />
+        weather <>
+          sunny <input type='radio' name='weather' onChange={() => setWeather('great')} />
+          rainy <input type='radio' name='weather' onChange={() => setWeather('rainy')} />
+          cloudy <input type='radio' name='weather' onChange={() => setWeather('cloudy')} />
+          stormy <input type='radio' name='weather' onChange={() => setWeather('stormy')} />
+          windy <input type='radio' name='weather' onChange={() => setWeather('windy')} />
+        </><br />
         comment <input
           value={comment}
           onChange={(event) => setComment(event.target.value)}
-        /><br/>
+        /><br />
         <button type='submit'>add</button>
       </form>
       <h2>Diary entries</h2>
