@@ -1,9 +1,13 @@
 import express from 'express';
+import { Request } from 'express';
 import diaryRouter from './routes/diaries';
+import cors from 'cors';
+
 const app = express();
+app.use(cors<Request>());
 app.use(express.json());
 
-const PORT = 3000;
+const PORT = 3001;
 
 app.get('/ping', (_req, res) => {
   console.log('someone pinged here');

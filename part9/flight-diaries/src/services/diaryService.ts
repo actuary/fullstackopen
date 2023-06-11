@@ -11,11 +11,12 @@ const findById = (id: number): DiaryEntry | undefined => {
 };
 
 const getNonSensitiveEntries = (): NonSensitiveDiaryEntry[] => {
-  return diaries.map(({ id, date, weather, visibility }) => ({
+  return diaries.map(({ id, date, weather, visibility, comment }) => ({
     id,
     date,
     weather,
     visibility,
+    comment
   }));
 };
 
