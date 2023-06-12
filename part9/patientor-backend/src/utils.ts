@@ -1,4 +1,4 @@
-import { Gender, NewPatientEntry } from "./types";
+import { Gender, NewPatientEntry, Entry } from "./types";
 
 
 const toNewPatientEntry = (object: unknown): NewPatientEntry => {
@@ -15,13 +15,15 @@ const toNewPatientEntry = (object: unknown): NewPatientEntry => {
   const ssn = parseSsn(object.ssn);
   const gender = parseGender(object.gender);
   const occupation = parseOccupation(object.occupation);
+  const entries: Entry[] = [];
 
   return {
     name,
     dateOfBirth,
     ssn,
     gender,
-    occupation
+    occupation,
+    entries
   };
 };
 
