@@ -5,10 +5,69 @@ import { Button, Divider, Container, Typography } from '@mui/material';
 import { Female, Male, Transgender } from "@mui/icons-material";
 
 import { apiBaseUrl } from "./constants";
-import { Patient } from "./types";
+import { Patient, Entry } from "./types";
 
 import patientService from "./services/patients";
 import PatientListPage from "./components/PatientListPage";
+
+interface EntryProps {
+  entry: Entry;
+}
+
+const HospitalEntryView = ({ entry }: EntryProps) => (
+  <>
+    <p>{entry.date}<em> {entry.description}</em></p>
+    {entry.diagnosisCodes ? 
+      <ul>
+        {
+          entry.diagnosisCodes.map( (code) => <li>{code}</li>)
+        }
+      </ul>
+      : null
+    }
+  </>
+)
+
+const HealthCheckEntryView = ({ entry }: EntryProps) => (
+  <>
+    <p>{entry.date}<em> {entry.description}</em></p>
+    {entry.diagnosisCodes ? 
+      <ul>
+        {
+          entry.diagnosisCodes.map( (code) => <li>{code}</li>)
+        }
+      </ul>
+      : null
+    }
+  </>
+)
+
+const OccupationalHealthcareEntryView = ({ entry }: EntryProps) => (
+  <>
+    <p>{entry.date}<em> {entry.description}</em></p>
+    {entry.diagnosisCodes ? 
+      <ul>
+        {
+          entry.diagnosisCodes.map( (code) => <li>{code}</li>)
+        }
+      </ul>
+      : null
+    }
+  </>
+)
+
+const EntryView = ({ entry }: EntryProps ) => {
+  switch (entry.type) {
+    case 'Hospital':
+      return <HospitalEntryView entry={entry} />
+    case 'HealthCheck':
+      return <HealthCheckEntryView entry={entry} />
+    case 'OccupationalHealthcare':
+      return <OccupationalHealthcareEntryView entry={entry} />
+    default:
+      return <>entry type not found.</>
+  };
+};
 
 const PatientView = () => {
   const { id } = useParams();
@@ -33,6 +92,10 @@ const PatientView = () => {
           ssn: {patient.ssn}<br/>
           occupation: {patient.occupation}
         </p>
+        <h3>entries</h3>
+        {
+          patient.entries.map((entry, i) => <EntryView key={i} entry={entry} />)
+        }
       </>
     )
   } else {
