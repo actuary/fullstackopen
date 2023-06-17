@@ -1,6 +1,6 @@
 import express from 'express';
 import patientService from '../services/patientService';
-import toNewPatientEntry from '../utils';
+import toNewPatientEntry, { toNewEntry } from '../utils';
 
 const router = express.Router();
 
@@ -24,9 +24,32 @@ router.get('/:id', (req, res) => {
   return res.send(patient);
 });
 
+router.post('/:id/entries', (req, res) => {
+  try {
+    req.body.id = 'blank';
+    const newEntry = toNewEntry(req.body);
+
+    const object = req.params;
+    if (!('id' in object)) {
+      return res.status(400).send('request must contain id');
+    }
+    const patientId = object.id;
+    const addedEntry = patientService.addNewPatientEntry(patientId, newEntry);
+
+    return res.json(addedEntry);
+  } catch (error: unknown) {
+    let errorMessage = 'Something went wrong.';
+    if (error instanceof Error) {
+      errorMessage += ' Error: ' + error.message;
+    }
+    return res.status(400).send(errorMessage);
+  }
+});
+
 
 router.post('/', (req, res) => {
   try {
+    req.body.id = '';
     const newPatientEntry = toNewPatientEntry(req.body);
     const addedEntry = patientService.addNewPatient(newPatientEntry);
     res.json(addedEntry);

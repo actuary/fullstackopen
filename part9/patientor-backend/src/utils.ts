@@ -232,7 +232,7 @@ const parseHealthCheckRating = (healthCheckRating: unknown): HealthCheckRating =
   return healthCheckRating;
 };
 
-const parseString = (value: unknown, name: string): string => {
+export const parseString = (value: unknown, name: string): string => {
   if (!value || !isString(value)) {
     throw new Error(`Incorrect or missing ${name}`);
   }

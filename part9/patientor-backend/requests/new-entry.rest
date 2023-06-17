@@ -1,0 +1,13 @@
+POST http://localhost:3001/api/patients/d2773336-f723-11e9-8f0b-362b9e155667/entries
+Content-Type: application/json
+
+{
+  "description": "Alive",
+  "date": "2022-06-18",
+  "specialist": "Dr Alive",
+  "discharge": {
+    "date": "2021-12-31",
+    "criteria": "neck pain"
+  },
+  "type": "Hospital"
+}
